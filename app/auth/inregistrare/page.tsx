@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -14,10 +13,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Spinner } from '@/components/ui/spinner'
 import { Eye, EyeOff, Mail, Lock, User, Phone, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
+import Link from 'next/link'
 export const dynamic = 'force-dynamic';
 
-export default function RegisterPage() {
-  const router = useRouter()
+function RegisterPageContent() {  
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect') || '/'
 
@@ -399,5 +398,12 @@ export default function RegisterPage() {
         </Card>
       </div>
     </div>
+  )
+}
+export default function RegisterPage() {
+  return (
+    <Suspense>
+      <RegisterPageContent />
+    </Suspense>
   )
 }
